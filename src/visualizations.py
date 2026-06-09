@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+DATA_DIR = r'C:\Tiago\data engineer\Projetos\credit-portfolio-analysis\data'
 
 def plot_net_margin_by_safra(pl_safra_df):
     plt.figure(figsize=(14, 6))
@@ -9,7 +12,7 @@ def plot_net_margin_by_safra(pl_safra_df):
     plt.ylabel("Net Margin (R$)", fontsize=12)
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig("data/net_margin_by_safra.png", dpi=150)
+    plt.savefig(os.path.join(DATA_DIR, "net_margin_by_safra.png"), dpi=150)
     plt.show()
 
 def plot_default_rate_by_product(default_df):
@@ -20,7 +23,7 @@ def plot_default_rate_by_product(default_df):
     plt.ylabel("Default Rate (%)", fontsize=12)
     plt.xticks(rotation=15)
     plt.tight_layout()
-    plt.savefig("data/default_rate_by_product.png", dpi=150)
+    plt.savefig(os.path.join(DATA_DIR, "default_rate_by_product.png"), dpi=150)
     plt.show()
 
 def plot_sensitivity_analysis(sensitivity_df):
@@ -30,5 +33,5 @@ def plot_sensitivity_analysis(sensitivity_df):
     plt.xlabel("Default Rate Increase", fontsize=12)
     plt.ylabel("Total Net Margin (R$)", fontsize=12)
     plt.tight_layout()
-    plt.savefig("data/sensitivity_analysis.png", dpi=150)
+    plt.savefig(os.path.join(DATA_DIR, "sensitivity_analysis.png"), dpi=150)
     plt.show()
