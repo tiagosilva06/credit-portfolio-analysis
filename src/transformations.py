@@ -1,5 +1,4 @@
 from pyspark.sql.functions import col, when, round as spark_round
-import pandas as pd
 
 def apply_spark_transformations(df):
     df = df.withColumn(
@@ -21,4 +20,11 @@ def apply_spark_transformations(df):
 def apply_pandas_transformations(df_pandas):
     df_pandas["interest_revenue"] = round(df_pandas["granted_amount"] * df_pandas["interest_rate"] * 12, 2)
 
-    df_pandas["expected_loss"] = df_pandas.apply
+    df_pandas["expected_loss"] = df_pandas.apply(
+        lambda row: round(row["granted_amount"] * 0.80, 2) if row["payment_status"] == "Inadimplente"
+        else round(row["granted_amount"] * 0.40, 2) if row["payment_status"] == "Parcialmente Inadimplente"
+        else 0.0, axis=1
+    )
+
+    df_pandas["net_margin"] = round(df_pandas["interest_revenue"] - df_pandas["expected_loss"], 2)
+    return df_pandas
